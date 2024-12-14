@@ -1,0 +1,100 @@
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <div class="bg-danger text-center text-white p-3">
+                <h3>Create New Account</h3>
+            </div>
+            <form #formData="ngForm" (ngSubmit)="Signup(formData)" novalidate (keydown.enter)="$event.preventDefault()">
+                <div class="form-group">
+                    <label for="name"><b>Full Name:<span
+                                *ngIf="signupModel.FullName.length<3 ||signupModel.FullName==null || signupModel.FullName==undefined"
+                                class="text-danger">*</span></b></label>
+                    <input type="text" required minlength="3" maxlength="30" #fullname="ngModel"
+                        [class.is-valid]="fullname.touched && fullname.valid"
+                        [class.is-invalid]="fullname.touched && fullname.invalid" name="fullname" class="form-control"
+                        [(ngModel)]="signupModel.FullName">
+                    <!-- Fullname Related Validations -->
+                    <div *ngIf="fullname.touched && fullname.invalid">
+                        <div class="text-danger" *ngIf="fullname.errors && fullname.errors['required']">
+                            <b>Full Name Is Required!</b>
+                        </div>
+                        <div class="text-danger" *ngIf="fullname.errors && fullname.errors['minlength']">
+                            <b>3 Characters Must</b>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="email"><b>Email:<span
+                                *ngIf="signupModel.Email=='' ||signupModel.Email==null || signupModel.Email==undefined"
+                                class="text-danger">*</span></b></label>
+                    <input type="text" required pattern="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$" #email="ngModel"
+                        [class.is-valid]="email.touched && email.valid"
+                        [class.is-invalid]="email.touched && email.invalid" name="email" class="form-control"
+                        [(ngModel)]="signupModel.Email">
+                    <!-- Email Related Validations -->
+                    <div *ngIf="email.touched && email.invalid">
+                        <div class="text-danger" *ngIf="email.errors && email.errors['required']">
+                            <b>Email Is Required!</b>
+                        </div>
+                        <div class="text-danger" *ngIf="email.errors && email.errors['pattern']">
+                            <b>Invalid Email!</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password"><b>Password:<span
+                                *ngIf="signupModel.Password=='' ||signupModel.Password==null || signupModel.Password==undefined"
+                                class="text-danger">*</span></b></label>
+                    <input type="password" required
+                        pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+                        [class.is-valid]="password.touched && password.valid"
+                        [class.is-invalid]="password.touched && password.invalid" #password="ngModel" name="password"
+                        class="form-control" [(ngModel)]="signupModel.Password">
+                    <!-- Password Related Validations -->
+                    <div *ngIf="password.touched && password.invalid">
+                        <div class="text-danger" *ngIf="password.errors && password.errors['required']">
+                            <b>Password Is Required!</b>
+                        </div>
+                        <div *ngIf="password.errors && password.errors['pattern']">
+                            <b class="text-danger">Password Must Contains:</b>
+                            <b>
+                                <ol class="text-success">
+                                    <li>Max 8 Characters</li>
+                                    <li>Upper & Lower Letters</li>
+                                    <li>Numbers</li>
+                                    <li>Special Characters</li>
+                                </ol>
+                            </b>
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <div class="form-group d-grid">
+                    <input type="submit" value="Sign up" [class.disabled]="formData.form.invalid"
+                        class="btn btn-danger">
+                </div>
+
+
+            </form>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center mt-3">
+            Already member?
+            <a href="#" class="text-danger" style="text-decoration: none; font-weight: bolder;">Sign in</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center mt-3" style="font-size:15px;">
+            By creating an account, you agree to Smart Convert
+            <a href="#" class="text-danger" style="text-decoration: none; font-weight: bolder;">Terms of Service</a>
+            and
+            <a href="#" class="text-danger" style="text-decoration: none; font-weight: bolder;">Privacy Policy</a>
+        </div>
+
+    </div>
+</div>
